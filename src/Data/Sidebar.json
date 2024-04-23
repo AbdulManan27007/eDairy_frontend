@@ -1,0 +1,156 @@
+[
+  {
+    "type": "teacher",
+    "content": [
+      {
+        "division": "Dashboard",
+        "section": [
+          {
+            "title": "Dashboard",
+            "icon": "DashboardOutlined",
+            "to": "teacher/home"
+          }
+        ]
+      },
+      {
+        "division": "Class Info",
+        "section": [
+          {
+            "title": "Attendance",
+            "icon": "GroupsOutlined",
+            "to": "teacher/attendance"
+          },
+          {
+            "title": "Edairy",
+            "icon": "AssignmentOutlined",
+            "to": "teacher/e_dairy"
+          },
+          {
+            "title": "Time Table",
+            "icon": "TableChartOutlined",
+            "to": "teacher/timetable"
+          }
+        ]
+      },
+      {
+        "division": "Add ons",
+        "section": [
+          {
+            "title": "Profile",
+            "icon": "HowToRegOutlined",
+            "to": "teacher/profile"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "parent",
+    "content": [
+      {
+        "division": "Dashboard",
+        "section": [
+          {
+            "title": "Dashboard",
+            "icon": "DashboardOutlined",
+            "to": "parent/home"
+          }
+        ]
+      },
+      {
+        "division": "Addons",
+        "section": [
+          {
+            "title": "Edairy",
+            "icon": "AssignmentOutlined",
+            "to": "parent/e_dairy"
+          },
+          {
+            "title": "Attendance",
+            "icon": "TableChartOutlined",
+            "to": "parent/attendance"
+          }
+        ]
+      },
+      {
+        "division": "Other",
+        "section": [
+          {
+            "title": "Profile",
+            "icon": "HowToRegOutlined",
+            "to": "parent/profile"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "admin",
+    "content": [
+      {
+        "division": "Dashboard",
+        "section": [
+          {
+            "title": "Dashboard",
+            "icon": "DashboardOutlined",
+            "to": "admin/home"
+          }
+        ]
+      },
+      {
+        "division": "Class Info",
+        "section": [
+          {
+            "title": "Classes",
+            "icon": "CalendarMonthOutlined",
+            "to": "admin/classes"
+          },
+
+          {
+            "title": "Sections",
+            "icon": "CalendarMonthOutlined",
+            "to": "admin/sections"
+          },
+          {
+            "title": "Edairy",
+            "icon": "AssignmentOutlined",
+            "to": "admin/e_dairy"
+          },
+
+          {
+            "title": "Subjects",
+            "icon": "CalendarMonthOutlined",
+            "to": "admin/subjects"
+          },
+
+          {
+            "title": "Time Table",
+            "icon": "TableChartOutlined",
+            "to": "admin/timetable"
+          },
+          {
+            "title": "Teachers",
+            "icon": "CalendarMonthOutlined",
+            "to": "admin/teachers"
+          },
+
+          {
+            "title": "Students",
+            "icon": "CalendarMonthOutlined",
+            "to": "admin/students"
+          }
+        ]
+      },
+      {
+        "division": "Add ons",
+        "section": [
+          {
+            "title": "Profile",
+            "icon": "HowToRegOutlined",
+            "to": "admin/profile"
+          }
+        ]
+      }
+    ]
+  }
+]

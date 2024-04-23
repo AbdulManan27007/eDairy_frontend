@@ -1,0 +1,22 @@
+[
+  {
+    "title": "Teachers",
+    "icon": "Assignment",
+    "color": "#f44336"
+  },
+  {
+    "title": "Students",
+    "icon": "LibraryBooks",
+    "color": "#03a9f4"
+  },
+  {
+    "title": "Classes",
+    "icon": "TaskAlt",
+    "color": "#4caf50"
+  },
+  {
+    "title": "Others",
+    "icon": "LocalLibrary",
+    "color": "#e91e63"
+  }
+]
