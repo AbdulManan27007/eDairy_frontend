@@ -28,7 +28,7 @@ privateApi.interceptors.response.use(
 );
 
 privateApi.interceptors.request.use(async (request) => {
-  const accessToken = await localStorage.getItem("token");
+  const accessToken = await localStorage.getItem("access_token");
   if (accessToken) {
     request.headers.Authorization = `Bearer ${accessToken}`;
   }

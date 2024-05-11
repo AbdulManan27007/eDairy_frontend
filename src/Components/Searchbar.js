@@ -29,6 +29,8 @@ export const Searchbar = () => {
       const selectedItem = childrens?.find(
         (item) => item?.id === event.target.value
       );
+      setSubjects(selectedItem?.class?.subject || []);
+      setSelectedClass(selectedItem?.class || {});
       setSelectedChildren(selectedItem || {});
     } else {
       setSelectedChildren({});

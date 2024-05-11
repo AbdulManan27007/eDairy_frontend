@@ -9,15 +9,8 @@ import { GET_ALL_students } from "../../services/Students";
 
 const StudentDashboard = () => {
   const [isLoading, setisLoading] = React.useState(false);
-
   const context = useContext(eDairyContext);
-  const {
-    user,
-
-    selectedChilren,
-
-    setChildrens,
-  } = context;
+  const { user, selectedChilren, setChildrens } = context;
 
   useEffect(() => {
     user?.id && getChildrens();

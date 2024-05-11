@@ -40,7 +40,7 @@ export const DELETE_BY_ID = async (categoryId) => {
 export const UPDATE_BY_ID = async (dataObj) => {
   try {
     const { data } = await privateApi.patch(
-      `${BASE_API_URL}/parent/${dataObj._id}`,
+      `${BASE_API_URL}/parent/${dataObj.id}`,
       dataObj
     );
     return data;

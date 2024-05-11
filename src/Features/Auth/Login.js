@@ -32,6 +32,7 @@ import { LoginAdmin } from "../../services/Admin";
 import eDairyContext from "../../context/eDairyContext";
 import { LoginParent } from "../../services/parents";
 import { LoginTeacher } from "../../services/Teachers";
+import Auth from "../../services/auth-service";
 
 // Form Styling
 // Custom Styled TextField Component
@@ -67,6 +68,7 @@ const Login = () => {
     initialValues: {
       email: "",
       password: "",
+      idCard: "",
     },
     validationSchema: LoginValidationSchema,
     onSubmit: (values) => {
@@ -90,12 +92,29 @@ const Login = () => {
   const adminLogin = async (credentials) => {
     LoginAdmin(credentials)
       .then((data) => {
-        localStorage.setItem("token", data?.data?.accessToken);
-        localStorage.setItem("id", data?.data?.id);
-        setUser(data?.data);
+        Auth.login("ediaryAdmin@gmail.com", "txend1122")
+          .then((userCredentials) => {
+            let chatCredentials = {
+              userId: userCredentials.userInfo.id,
+              password: { token: userCredentials.password },
+            };
+            console.log("userCredentials.userInfo", userCredentials.userInfo);
+            context.connectToChat(chatCredentials);
+          })
+          .catch((error) => {
+            console.log(error);
+            alert("No such user");
+          });
+
         return data?.data;
       })
-      .then((user) => navigate(`/dashboard/${user.role}/home`))
+
+      .then((user) => {
+        localStorage.setItem("access_token", user?.accessToken);
+        localStorage.setItem("id", user?.id);
+        setUser(user);
+        navigate(`/dashboard/${user.role}/home`);
+      })
       .catch((error) => {
         console.log("error", error);
         const errorMessage =
@@ -108,12 +127,28 @@ const Login = () => {
   const teacherLogin = async (credentials) => {
     LoginTeacher(credentials)
       .then((data) => {
-        localStorage.setItem("token", data?.data?.accessToken);
-        localStorage.setItem("id", data?.data?.id);
-        setUser(data?.data);
+        Auth.login(credentials.email, "txend1122")
+          .then((userCredentials) => {
+            let chatCredentials = {
+              userId: userCredentials.userInfo.id,
+              password: { token: userCredentials.password },
+            };
+            console.log("userCredentials.userInfo", userCredentials.userInfo);
+            context.connectToChat(chatCredentials);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+
         return data?.data;
       })
-      .then((user) => navigate(`/dashboard/${user.role}/home`))
+
+      .then((user) => {
+        localStorage.setItem("access_token", user?.accessToken);
+        localStorage.setItem("id", user?.id);
+        setUser(user);
+        navigate(`/dashboard/${user.role}/home`);
+      })
       .catch((error) => {
         console.log("error", error);
         const errorMessage =
@@ -126,14 +161,28 @@ const Login = () => {
   const ParentLogin = async (credentials) => {
     LoginParent(credentials)
       .then((data) => {
-        if (data?.data) {
-          localStorage.setItem("token", data?.data?.accessToken);
-          localStorage.setItem("id", data?.data?.id);
-          setUser(data?.data);
-          return data?.data;
-        }
+        Auth.login(credentials.idCard, "txend1122")
+          .then((userCredentials) => {
+            let chatCredentials = {
+              userId: userCredentials.userInfo.id,
+              password: { token: userCredentials.password },
+            };
+            console.log("userCredentials.userInfo", userCredentials.userInfo);
+            context.connectToChat(chatCredentials);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+
+        return data?.data;
       })
-      .then((user) => navigate(`/dashboard/${user.role}/home`))
+
+      .then((user) => {
+        localStorage.setItem("access_token", user?.accessToken);
+        localStorage.setItem("id", user?.id);
+        setUser(user);
+        navigate(`/dashboard/${user.role}/home`);
+      })
       .catch((error) => {
         console.log("error", error);
         const errorMessage =

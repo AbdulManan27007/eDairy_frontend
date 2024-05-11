@@ -17,6 +17,9 @@ import { AttendanceListStodent } from "../Features/Teachers/Attendance/Attendanc
 import { TeacherAssignmentContainer } from "../Features/Teachers/Assignment/TeacherAssignmentContainer";
 import StudentDashboard from "../Features/Student/StudentDashboard";
 import { ParentsCardWrapper } from "../Features/Admin/parents/ParentsCardWrapper";
+// import ChatScreen from "../Pages/Chat/ChatScreen";
+import Home from "../Pages/Home/Home";
+import ChatScreen from "../Pages/Chat/ChatScreen";
 
 const DashboardRoutes = ({ user }) => {
   return (
@@ -37,6 +40,7 @@ const DashboardRoutes = ({ user }) => {
         <Route path="admin/parents" element={<ParentsCardWrapper />} />
 
         <Route path="admin/profile" element={<AccountWrapper />} />
+        <Route path="admin/chat" element={<ChatScreen />} />
 
         <Route path="admin/e_dairy" element={<TeacherAssignmentContainer />} />
       </Route>
@@ -51,6 +55,8 @@ const DashboardRoutes = ({ user }) => {
 
         <Route path="teacher/attendance" element={<Attendance />} />
         <Route path="teacher/profile" element={<AccountWrapper />} />
+        <Route path="teacher/chat" element={<ChatScreen />} />
+
         <Route
           path="teacher/e_dairy"
           element={<TeacherAssignmentContainer />}
@@ -68,6 +74,7 @@ const DashboardRoutes = ({ user }) => {
         <Route path="parent/profile" element={<AccountWrapper />} />
 
         <Route path="parent/attendance" element={<AttendanceListStodent />} />
+        <Route path="parent/chat" element={<ChatScreen />} />
       </Route>
     </Routes>
   );

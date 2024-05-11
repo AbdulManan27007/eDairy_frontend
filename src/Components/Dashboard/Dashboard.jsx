@@ -169,14 +169,14 @@ function Dashboard() {
                 <BiBookAdd className="h-6 w-6 text-white" />
               </div>
             </div>
-            <p className="mb-2">Sections</p>
+            <p className="mb-2">Others</p>
             <div className="flex items-center gap-3">
               <div className="w-6 h-6 bg-white bg-opacity-20 text-white flex items-center justify-center rounded-full">
                 <span>
                   <IoMdAdd className="text-lg w-4 h-4 font-thin" />
                 </span>
               </div>
-              <span> {sections?.length} new Sections added!</span>
+              <span> </span>
             </div>
           </div>
         </div>

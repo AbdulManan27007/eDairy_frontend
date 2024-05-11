@@ -57,6 +57,7 @@ export const ClassesCardWrapper = () => {
               mx: 2,
               color: "#4e73df",
               fontWeight: "600",
+              display: "none",
             }}
             variant="outlined"
             onClick={handleClickOpen}

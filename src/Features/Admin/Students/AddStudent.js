@@ -149,7 +149,7 @@ export const AddStudent = ({ subjectData }) => {
         toast.error("Select a class first");
         return;
       }
-      if (!selectedParent) {
+      if (!selectedParent?.id) {
         toast.error("Parent required");
         return;
       }
@@ -354,7 +354,6 @@ export const AddStudent = ({ subjectData }) => {
               variant="contained"
               color="primary"
               sx={{ width: "100%" }}
-              disabled={formik.isSubmitting} // Disable the button when submitting the form
             >
               Submit
             </Button>

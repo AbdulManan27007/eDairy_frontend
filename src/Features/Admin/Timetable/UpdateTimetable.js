@@ -12,6 +12,8 @@ import {
   TextField,
   Button,
   Box,
+  Select,
+  MenuItem,
 } from "@mui/material";
 
 import { CardWrapper } from "../../../Components/CardWrapper";
@@ -34,11 +36,21 @@ export const UpdateTimetable = ({ data }) => {
   const context = useContext(eDairyContext);
   const { selectedClass, setClasses, setSelectedClass } = context;
   const [tableData, setTableData] = useState(data);
+  const [subjectsList, setSubjectsList] = useState(selectedClass?.subject);
+
   const [isLoading, setisLoading] = useState(false);
+
+  console.log("selectedClass", selectedClass);
 
   useEffect(() => {
     setTableData(data);
   }, [data]);
+
+  useEffect(() => {
+    if (selectedClass) {
+      setSubjectsList(selectedClass?.subject);
+    }
+  }, [selectedClass]);
 
   const handlePeriodChange = (dayIndex, periodIndex, value) => {
     setTableData((prevTableData) => {
@@ -138,7 +150,30 @@ export const UpdateTimetable = ({ data }) => {
                     <TableCell>{data.day}</TableCell>
                     {data.periods.map((period, periodIndex) => (
                       <TableCell key={periodIndex}>
-                        <TextField
+                        <Select
+                          labelId="demo-simple-select-label"
+                          id="demo-simple-select"
+                          value={period}
+                          label="Subject"
+                          onChange={(e) =>
+                            handlePeriodChange(
+                              dayIndex,
+                              periodIndex,
+                              e.target.value
+                            )
+                          }
+                          sx={{ width: "100px" }}
+                        >
+                          <MenuItem value={"Break"}>Break</MenuItem>
+
+                          {subjectsList &&
+                            subjectsList?.length &&
+                            subjectsList.map((item) => {
+                              return <MenuItem value={item}>{item}</MenuItem>;
+                            })}
+                        </Select>
+
+                        {/* <TextField
                           value={period}
                           onChange={(e) =>
                             handlePeriodChange(
@@ -149,7 +184,7 @@ export const UpdateTimetable = ({ data }) => {
                           }
                           required
                           sx={{ width: "100px" }}
-                        />
+                        /> */}
                       </TableCell>
                     ))}
                   </TableRow>

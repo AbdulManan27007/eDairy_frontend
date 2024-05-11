@@ -65,7 +65,7 @@ export const Update_password_form = () => {
           if (response?.data) {
             let update = { ...user };
 
-            update.username = response?.data?.username;
+            update.name = response?.data?.name;
             update.profilePic = response?.data?.profilePic;
 
             setUser(update);
@@ -89,7 +89,7 @@ export const Update_password_form = () => {
           if (response?.data) {
             let update = { ...user };
 
-            update.username = response?.data?.username;
+            update.name = response?.data?.name;
             update.profilePic = response?.data?.profilePic;
 
             setUser(update);

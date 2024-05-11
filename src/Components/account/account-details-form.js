@@ -18,7 +18,7 @@ import { UPDATE_BY_ID_Admin } from "../../services/Admin";
 import { UPDATE_BY_ID } from "../../services/Teachers";
 
 const validationSchema = yup.object().shape({
-  username: yup.string().min(3, "Please enter a valid username"),
+  name: yup.string().min(3, "Please enter a valid name"),
 });
 
 export const AccountDetailsForm = ({ imageSrc }) => {
@@ -28,7 +28,7 @@ export const AccountDetailsForm = ({ imageSrc }) => {
 
   const formik = useFormik({
     initialValues: {
-      username: user?.username || "",
+      name: user?.name || "",
     },
     validationSchema,
     onSubmit: (values) => {
@@ -44,6 +44,8 @@ export const AccountDetailsForm = ({ imageSrc }) => {
       ...values,
     };
 
+    console.log("body", body);
+
     if (user?.role == "admin") {
       UPDATE_BY_ID_Admin(body)
         .then((response) => {
@@ -52,7 +54,7 @@ export const AccountDetailsForm = ({ imageSrc }) => {
           if (response?.data) {
             let update = { ...user };
 
-            update.username = response?.data?.username;
+            update.name = response?.data?.name;
             update.profilePic = response?.data?.profilePic;
 
             setUser(update);
@@ -76,7 +78,7 @@ export const AccountDetailsForm = ({ imageSrc }) => {
           if (response?.data) {
             let update = { ...user };
 
-            update.username = response?.data?.username;
+            update.name = response?.data?.name;
             update.profilePic = response?.data?.profilePic;
 
             setUser(update);
@@ -106,15 +108,13 @@ export const AccountDetailsForm = ({ imageSrc }) => {
             <Grid md={6} xs={12}>
               <TextField
                 fullWidth
-                id="username"
-                name="username"
-                label="username"
-                value={formik.values.username}
+                id="name"
+                name="name"
+                label="name"
+                value={formik.values.name}
                 onChange={formik.handleChange}
-                error={
-                  formik.touched.username && Boolean(formik.errors.username)
-                }
-                helperText={formik.touched.username && formik.errors.username}
+                error={formik.touched.name && Boolean(formik.errors.name)}
+                helperText={formik.touched.name && formik.errors.name}
               />
             </Grid>
             <Grid md={6} xs={12}>

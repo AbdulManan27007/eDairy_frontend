@@ -20,6 +20,7 @@ import {
   InputLabel,
   Typography,
 } from "@mui/material";
+import Auth from "../../../services/auth-service";
 
 const StyledTextField = styled(TextField)(() => ({}));
 
@@ -41,8 +42,8 @@ const validationSchema = yup.object().shape({
 
   phone: yup
     .string()
-    .min(5, "Please enter a valid phone address")
-    .max(15, "Enter an alternate phone address")
+    .min(11, "Phone length should  11")
+    .max(11, "Phone length should  11")
     .required("Contact info is required"),
   address: yup
     .string()
@@ -109,10 +110,25 @@ export const AddParent = ({ subjectData }) => {
       idCard: subjectData ? subjectData?.idCard : "",
       phone: subjectData ? subjectData?.phone : "",
       address: subjectData ? subjectData?.address : "",
+      connectCubeId: "",
     },
     validationSchema,
     onSubmit: (values) => {
-      subjectData ? updateClassSubject(values) : addNewSubject(values);
+      if (subjectData) {
+        updateClassSubject(values);
+      } else {
+        // Auth.signup(values.name, values.idCard, "txend1122")
+        //   .then((user) => {
+        //     console.log("chatuser>>>>>", user.user);
+        //     values.connectCubeId = user?.user?.id;
+        //     addNewSubject(values);
+        //   })
+        //   .catch((er) => {
+        //     console.log("chaterror", er);
+        //   });
+
+        addNewSubject(values);
+      }
     },
   });
 
@@ -126,6 +142,16 @@ export const AddParent = ({ subjectData }) => {
     ); // Insert hyphens after 5 and 7 digits
     formik.setFieldValue("idCard", formattedIdCard);
   }, [formik.values.idCard]);
+
+  React.useEffect(() => {
+    if (formik.values.phone) {
+      const formattedValue = formik.values.phone
+        .replace(/[^0-9]/g, "")
+        .slice(0, 11); // Remove non-numeric characters and limit to 13 characters
+
+      formik.setFieldValue("phone", formattedValue);
+    }
+  }, [formik.values.phone]);
 
   return (
     <CardWrapper title={subjectData ? "Update Parent" : "Add New Parent"}>

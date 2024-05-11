@@ -9,11 +9,21 @@ export const CREATE_NEW = async (dataObj) => {
     return error;
   }
 };
-export const GET_ALL = async (subject) => {
+export const GET_ALL = async (obj) => {
   try {
-    const { data } = subject
-      ? await privateApi.get(`${BASE_API_URL}/edairy/?section=${subject}`)
-      : await privateApi.get(`${BASE_API_URL}/edairy`);
+    let query = "";
+    if (obj?.subject) {
+      query += `subject=${obj.subject}&`;
+    }
+    if (obj?.class) {
+      query += `class=${obj.class}&`;
+    }
+    // Remove trailing '&' if any
+    query = query.replace(/&$/, "");
+    const { data } = await privateApi.get(
+      `${BASE_API_URL}/edairy${query ? `?${query}` : ""}`
+    );
+
     return data;
   } catch (error) {
     return error;

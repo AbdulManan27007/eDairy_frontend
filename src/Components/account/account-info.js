@@ -9,22 +9,39 @@ import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import eDairyContext from "../../context/eDairyContext";
 
+const getBase64 = (img, callback) => {
+  const reader = new FileReader();
+  reader.addEventListener("load", () => callback(reader.result));
+  reader.readAsDataURL(img);
+};
+
 export const AccountInfo = ({ imageSrc, setImageSrc }) => {
   const context = React.useContext(eDairyContext);
   const { user, setUser } = context;
 
   const handleImageUpload = (event) => {
     const file = event.target.files[0];
-    const reader = new FileReader();
-
-    reader.onloadend = () => {
-      setImageSrc(reader.result);
-    };
-
-    if (file) {
-      reader.readAsDataURL(file);
-    }
+    getBase64(file, (url) => {
+      console.log("uri", url);
+      setImageSrc(url);
+    });
   };
+
+  // const handleImageChange = (info) => {
+  //   if (info.file.status === "uploading") {
+  //     setLoading(true);
+  //     return;
+  //   }
+  //   if (info.file.status === "done") {
+  //     // Get this url from response in the real world.
+  //     getBase64(info.file.originFileObj, (url) => {
+  //       console.log("uri", url);
+
+  //       setData({ ...data, imageUrl: url });
+  //       setLoading(false);
+  //     });
+  //   }
+  // };
 
   const handleButtonClick = () => {
     document.getElementById("fileInput").click();
@@ -39,7 +56,7 @@ export const AccountInfo = ({ imageSrc, setImageSrc }) => {
               <Avatar src={imageSrc} sx={{ height: "80px", width: "80px" }} />
             </div>
             <Stack spacing={1} sx={{ textAlign: "center" }}>
-              <Typography variant="h5">{user?.username}</Typography>
+              <Typography variant="h5">{user?.name}</Typography>
               <Typography color="text.secondary" variant="body2">
                 {user?.role}
               </Typography>

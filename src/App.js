@@ -25,7 +25,7 @@ const App = () => {
   const { user, setUser } = context;
 
   useEffect(() => {
-    const accessToken = localStorage.getItem("token");
+    const accessToken = localStorage.getItem("access_token");
     if (accessToken) {
       const token = accessToken;
       const decodeToken = jwtDecode(token);
@@ -67,6 +67,7 @@ const App = () => {
       >
         <Routes>
           <Route path="/" element={<Home />} />
+
           <Route path="/auth/*" element={<AuthRoutes />} />
           <Route path="/dashboard/*" element={<LayoutContainer />} />
           <Route path="/404" element={<NotFound404 />} />

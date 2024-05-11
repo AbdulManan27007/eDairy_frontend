@@ -12,6 +12,9 @@ export const AccountWrapper = () => {
   const { user, setUser } = context;
   const [imageSrc, setImageSrc] = React.useState(user?.profilePic || "");
 
+  console.log("imageSrc", imageSrc);
+  console.log("user", user);
+
   return (
     <Stack spacing={3}>
       <div>

@@ -38,7 +38,7 @@ export const DELETE_BY_ID = async (id) => {
 export const UPDATE_BY_ID = async (dataObj) => {
   try {
     const { data } = await privateApi.patch(
-      `${BASE_API_URL}/teacher/${dataObj._id}`,
+      `${BASE_API_URL}/teacher/${dataObj.id}`,
       dataObj
     );
     return data;

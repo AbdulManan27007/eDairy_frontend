@@ -1,0 +1,48 @@
+.chat-screen {
+  width: 100%;
+  height: 75vh;
+  display: flex;
+
+  .header {
+    background-color: #fff;
+    padding: 0 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
+  }
+
+  .content {
+    // Allow content to grow and take the available space
+    overflow-y: scroll;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+  }
+
+  .sider {
+    height: 100%; // Set Sider height to cover full height
+    position: sticky;
+    top: 0;
+  }
+
+  .username {
+    margin-left: 8px;
+    font-weight: bold;
+  }
+
+  .message-form {
+    margin-top: auto; // Push the form to the bottom
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: space-between;
+    flex-wrap: nowrap !important;
+
+    .ant-btn {
+      margin-left: 16px; // Add some space between input and button
+    }
+  }
+}

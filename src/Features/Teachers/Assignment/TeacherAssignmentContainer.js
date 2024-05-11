@@ -9,24 +9,24 @@ import { GET_ALL } from "../../../services/E_Dairy";
 
 export const TeacherAssignmentContainer = () => {
   const context = useContext(eDairyContext);
-  const { e_dairies, sete_dairies, selectedSection, user } = context;
+  const { e_dairies, sete_dairies, selectedClass, user, selectedSubject } =
+    context;
   const [isLoading, setisLoading] = useState(false);
 
   useEffect(() => {
-    getalldaireis();
-  }, []);
+    if (selectedClass?.id && selectedSubject) {
+      getalldaireis({ class: selectedClass?.id, subject: selectedSubject });
+    } else if (selectedClass?.id) {
+      getalldaireis({ class: selectedClass?.id });
+    } else if (user.role !== "parent") {
+      getalldaireis({});
+    }
+  }, [selectedClass, selectedSubject]);
 
-  const getalldaireis = async () => {
-    const data = await GET_ALL();
-    if (data.data) {
-      if (user.role == "parent") {
-        const ff = data.data.filter(
-          (item) => item?.section?.id == selectedSection?.id
-        );
-        sete_dairies(ff);
-      } else {
-        sete_dairies(data.data);
-      }
+  const getalldaireis = async (obj) => {
+    const data = await GET_ALL(obj);
+    if (data?.data) {
+      sete_dairies(data.data);
     }
   };
 

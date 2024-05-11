@@ -1,4 +1,4 @@
-import React, { useCallback, useContext } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { styled } from "@mui/system";
 import {
@@ -9,6 +9,7 @@ import {
   IconButton,
   Toolbar,
   Typography,
+  Badge,
 } from "@mui/material";
 import {
   AccountCircleOutlined,
@@ -32,6 +33,7 @@ import { UserProfile } from "./UserProfile";
 import { Notifications } from "./Notifications";
 import { Messages } from "./Messages";
 import eDairyContext from "../../context/eDairyContext";
+import { useNavigate } from "react-router-dom";
 
 const MenuIcon = ({ onClick }) => (
   <Hidden smUp>
@@ -89,9 +91,22 @@ export const NavBar = () => {
   const dispatch = useDispatch();
   const open = useSelector(selectMobView);
   const darkMode = useSelector(selectTheme);
+  const navigate = useNavigate();
 
   const context = useContext(eDairyContext);
-  const { user, setUser } = context;
+  const { user, setUser, dialogs, chosenDialog } = context;
+
+  const [unreadCount, setUnreadCount] = useState(null);
+
+  useEffect(() => {
+    if (dialogs && dialogs?.length) {
+      const unreadMessagesCount = dialogs?.reduce((total, dialog) => {
+        return total + dialog?.unread_messages_count;
+      }, 0);
+
+      setUnreadCount(unreadMessagesCount);
+    }
+  }, [chosenDialog]);
 
   const handleDrawer = useCallback(() => {
     dispatch(toggleMobView());
@@ -116,15 +131,29 @@ export const NavBar = () => {
 
         <ThemeToggle darkMode={darkMode} onToggle={handleThemeToggle} />
 
-        <PopoverContainer
+        {/* <PopoverContainer
           buttonIcon={<ChatOutlined />}
           popoverContent={<Messages />}
-        />
+        /> */}
 
-        <PopoverContainer
+        <IconButton
+          size="large"
+          color="primary"
+          onClick={() => navigate(`/dashboard/${user.role}/chat`)}
+        >
+          {unreadCount ? (
+            <Badge badgeContent={unreadCount} color="primary">
+              <ChatOutlined />
+            </Badge>
+          ) : (
+            <ChatOutlined />
+          )}
+        </IconButton>
+
+        {/* <PopoverContainer
           buttonIcon={<NotificationsOutlined />}
           popoverContent={<Notifications />}
-        />
+        /> */}
 
         <Divider orientation="vertical" variant="middle" flexItem />
 
@@ -132,7 +161,7 @@ export const NavBar = () => {
           <Typography
             sx={{ color: "primary", marginLeft: "20px", lineHeight: "21px" }}
           >
-            {user.username}
+            {user.name}
           </Typography>
         </Hidden>
 

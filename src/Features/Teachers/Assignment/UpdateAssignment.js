@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import * as yup from "yup";
 import { useFormik } from "formik";
@@ -8,6 +8,8 @@ import dayjs from "dayjs";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { FiMessageSquare, FiEdit2, FiTrash } from "react-icons/fi";
+
 import {
   Avatar,
   Box,
@@ -67,6 +69,10 @@ export const UpdateAssignment = ({ data, id, handleSaveEdit }) => {
 
   const [dairyData, setDairyData] = useState(data);
   const [commentsList, setcommentsList] = useState(data?.comments);
+  const [isReplying, setIsReplying] = useState(false);
+  const [commentIndex, setCommentIndex] = useState(null);
+
+  const [otherUserCommentList, setOtherUserCommentList] = useState([]);
 
   const updateAssignmnt = (data) => {
     UPDATE_BY_ID({ id: id, data })
@@ -102,17 +108,32 @@ export const UpdateAssignment = ({ data, id, handleSaveEdit }) => {
 
   const addPoint = () => {
     let comment = {};
-
+    console.log("user??????", user);
     comment.comment = txt;
     comment.role = user?.role;
-    comment.name = user?.username || user?.name;
+    comment.name = user?.name;
+    comment.userId = user?.id;
+    // comment.profilePic = user?.profilePic;
     comment.date = dayjs(new Date().toString()).format("DD/MMM/YYYY");
 
-    const previousCommentsList = [...dairyData?.comments];
-    previousCommentsList.push(comment);
-    setcommentsList(previousCommentsList);
-    updateAssignmnt({ comments: previousCommentsList });
-    settxt("");
+    // comment.reply = {};
+
+    if (isReplying) {
+      const updatedComments = [...dairyData?.comments];
+      if (updatedComments[commentIndex]) {
+        updatedComments[commentIndex].reply = comment;
+      }
+      updateAssignmnt({ comments: updatedComments });
+      settxt("");
+      setIsReplying(false);
+      setCommentIndex(null);
+    } else {
+      const previousCommentsList = [...dairyData?.comments];
+      previousCommentsList.push(comment);
+      setcommentsList(previousCommentsList);
+      updateAssignmnt({ comments: previousCommentsList });
+      settxt("");
+    }
   };
 
   return (
@@ -132,10 +153,10 @@ export const UpdateAssignment = ({ data, id, handleSaveEdit }) => {
             <Card
               sx={{
                 borderRadius: "20px",
-                padding: "10px",
+                // padding: "10px",
                 marginTop: "20px",
-                backgroundImage: `url('${Dashboard}')`, // Add your background image path here
-                backgroundSize: "cover",
+                // backgroundImage: `url('${Dashboard}')`, // Add your background image path here
+                // backgroundSize: "cover",
                 border: "2px solid #ffb6c1", // Pink border
                 boxShadow: "none",
                 backgroundPosition: "center",
@@ -161,11 +182,11 @@ export const UpdateAssignment = ({ data, id, handleSaveEdit }) => {
                 {dairyData?.content?.map((item) => {
                   return (
                     <ListItem>
-                      <ListItemAvatar>
+                      {/* <ListItemAvatar>
                         <Avatar>
                           <ImageIcon />
                         </Avatar>
-                      </ListItemAvatar>
+                      </ListItemAvatar> */}
                       <ListItemText primary={item} />
                     </ListItem>
                   );
@@ -174,8 +195,8 @@ export const UpdateAssignment = ({ data, id, handleSaveEdit }) => {
             </Card>
           </Grid>
 
-          <Grid md={10} xs={10} mt={2}>
-            <TextField
+          <Grid md={12} xs={12} mt={12}>
+            {/* <TextField
               fullWidth
               id="Point"
               name="Point"
@@ -183,9 +204,78 @@ export const UpdateAssignment = ({ data, id, handleSaveEdit }) => {
               value={txt}
               onChange={(e) => settxt(e.target.value)}
               sx={{ height: "100%", width: "98%" }}
-            />
+            /> */}
+
+            {/* <div className="flex flex-col items-end border border-primary rounded-lg p-4">
+              <textarea
+                className="w-full focus:outline-none bg-transparent"
+                rows="5"
+                placeholder="Leave your comment here..."
+                value={txt}
+                onChange={(e) => settxt(e.target.value)}
+              />
+              <div className="flex flex-col-reverse gap-y-2 items-center gap-x-2 pt-2 min-[420px]:flex-row">
+                <button
+                  onClick={addPoint}
+                  className="px-6 py-2.5 rounded-lg bg-primary
+                     text-white font-semibold disabled:opacity-70 disabled:cursor-not-allowed"
+                >
+                  Add Comment
+                </button>
+              </div>
+            </div> */}
+
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "flex-end",
+                border: "1px solid #0D6EF8",
+                borderRadius: "0.5rem",
+                padding: "1rem",
+              }}
+            >
+              <textarea
+                style={{
+                  width: "100%",
+                  outline: "none",
+                  backgroundColor: "transparent",
+                }}
+                rows="2"
+                placeholder="Leave your comment here..."
+                value={txt}
+                onChange={(e) => settxt(e.target.value)}
+              />
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column-reverse",
+                  alignItems: "center",
+                  gap: "0.5rem",
+                  paddingTop: "0.5rem",
+                  paddingBottom: "0.5rem",
+                  minWidth: "420px",
+                  flexDirection: "row",
+                  justifyContent: "flex-end",
+                }}
+              >
+                <button
+                  onClick={addPoint}
+                  style={{
+                    padding: "0.625rem 1.5rem",
+                    borderRadius: "0.5rem",
+                    backgroundColor: "#0D6EF8",
+                    color: "white",
+                    fontWeight: "bold",
+                    cursor: "pointer",
+                  }}
+                >
+                  Add Comment
+                </button>
+              </div>
+            </div>
           </Grid>
-          <Grid md={2} xs={10} mt={2}>
+          {/* <Grid md={2} xs={10} mt={2}>
             <Button
               fullWidth
               onClick={addPoint}
@@ -195,7 +285,7 @@ export const UpdateAssignment = ({ data, id, handleSaveEdit }) => {
             >
               Add Comment
             </Button>
-          </Grid>
+          </Grid> */}
 
           <Grid md={12} xs={12}>
             <Card
@@ -216,19 +306,217 @@ export const UpdateAssignment = ({ data, id, handleSaveEdit }) => {
                   minHeight: "150px",
                 }}
               >
-                {commentsList?.map((item) => {
+                {commentsList?.map((item, index) => {
+                  if (user.role !== "teacher" && item.userId !== user.id) {
+                    return;
+                  }
+
                   return (
-                    <ListItem>
-                      <ListItemAvatar>
-                        <Avatar>
-                          <AbcRounded />
-                        </Avatar>
-                      </ListItemAvatar>
-                      <ListItemText
-                        primary={item?.name}
-                        secondary={`${item?.date} ${item?.comment}`}
-                      />
-                    </ListItem>
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "row",
+                        alignItems: "flex-start",
+                        gap: "0.75rem",
+                        backgroundColor: "#E5E7EB",
+                        padding: "0.75rem",
+                        borderRadius: "0.5rem",
+                      }}
+                      id={`comment-${index}`}
+                    >
+                      <Avatar src={item?.profilePic}>
+                        {item?.name?.slice(0, 1)}
+                      </Avatar>
+                      <div
+                        style={{
+                          display: "flex",
+                          flex: "1",
+                          flexDirection: "column",
+                        }}
+                      >
+                        <h5
+                          style={{
+                            fontWeight: "bold",
+                            color: "#4B5563",
+                            fontSize: "0.75rem",
+                            lineHeight: "1rem",
+                          }}
+                        >
+                          {item.name}
+                        </h5>
+                        <span
+                          style={{
+                            fontSize: "0.625rem",
+                            color: "#6B7280",
+                          }}
+                        >
+                          {item.comment}
+                        </span>
+                        <span
+                          style={{
+                            fontSize: "0.625rem",
+                            color: "#6B7280",
+                          }}
+                        >
+                          {item.date}
+                        </span>
+
+                        <div
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            gap: "0.75rem",
+                            color: "#6B7280",
+                            fontFamily: "Roboto",
+                            fontSize: "0.75rem",
+                            marginTop: "0.75rem",
+                            marginBottom: "0.75rem",
+                          }}
+                        >
+                          {user.role === "teacher" && (
+                            <button
+                              style={{
+                                display: "flex",
+                                alignItems: "center",
+                                gap: "0.5rem",
+                              }}
+                              onClick={() => {
+                                setCommentIndex(index);
+                                setIsReplying(true);
+                              }}
+                            >
+                              <FiMessageSquare
+                                style={{ width: "1rem", height: "auto" }}
+                              />
+                              <span>Reply</span>
+                            </button>
+                          )}
+                        </div>
+
+                        {isReplying && commentIndex === index && (
+                          <div
+                            style={{
+                              display: "flex",
+                              flexDirection: "column",
+                              alignItems: "flex-end",
+                              border: "1px solid #3B82F6",
+                              borderRadius: "0.5rem",
+                              padding: "1rem",
+                            }}
+                          >
+                            <textarea
+                              style={{
+                                width: "100%",
+                                outline: "none",
+                                backgroundColor: "transparent",
+                              }}
+                              rows="2"
+                              placeholder="Leave your comment here..."
+                              value={txt}
+                              onChange={(e) => settxt(e.target.value)}
+                            />
+                            <div
+                              style={{
+                                display: "flex",
+                                flexDirection: "column-reverse",
+                                alignItems: "center",
+                                gap: "0.5rem",
+                                paddingTop: "0.5rem",
+                                paddingBottom: "0.5rem",
+                                minWidth: "420px",
+                                flexDirection: "row",
+                                justifyContent: "flex-end",
+                              }}
+                            >
+                              <button
+                                onClick={() => {
+                                  setCommentIndex(null);
+                                  setIsReplying(false);
+                                }}
+                                style={{
+                                  padding: "0.625rem 1.5rem",
+                                  borderRadius: "0.5rem",
+                                  border: "1px solid #EF4444",
+                                  color: "#EF4444",
+                                }}
+                              >
+                                Cancel
+                              </button>
+
+                              <button
+                                onClick={addPoint}
+                                style={{
+                                  padding: "0.625rem 1.5rem",
+                                  borderRadius: "0.5rem",
+                                  backgroundColor: "#3B82F6",
+                                  color: "white",
+                                  fontWeight: "bold",
+                                  cursor: "pointer",
+                                }}
+                              >
+                                Reply
+                              </button>
+                            </div>
+                          </div>
+                        )}
+
+                        {item?.reply && Object.keys(item?.reply).length > 0 && (
+                          <div>
+                            <div
+                              style={{
+                                display: "flex",
+                                flexDirection: "row",
+                                alignItems: "flex-start",
+                                gap: "0.75rem",
+                                backgroundColor: "#E5E7EB",
+                                padding: "0.75rem",
+                                borderRadius: "0.5rem",
+                              }}
+                              id={`comment-${index}-reply`}
+                            >
+                              <Avatar
+                                src={item?.reply?.profilePic}
+                                alt={item?.name?.slice(0, 1)}
+                              />
+                              <div
+                                style={{
+                                  display: "flex",
+                                  flex: "1",
+                                  flexDirection: "column",
+                                }}
+                              >
+                                <h5
+                                  style={{
+                                    fontWeight: "bold",
+                                    color: "#4B5563",
+                                    fontSize: "0.75rem",
+                                    lineHeight: "1rem",
+                                  }}
+                                >
+                                  {item?.reply?.name}
+                                </h5>
+                                <span
+                                  style={{
+                                    fontSize: "0.625rem",
+                                    color: "#6B7280",
+                                  }}
+                                >
+                                  {item?.reply?.comment}
+                                </span>
+                                <span
+                                  style={{
+                                    fontSize: "0.625rem",
+                                    color: "#6B7280",
+                                  }}
+                                >
+                                  {item?.reply?.date}
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    </div>
                   );
                 })}
               </List>

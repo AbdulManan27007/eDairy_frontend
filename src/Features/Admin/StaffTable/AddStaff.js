@@ -5,7 +5,7 @@ import { useFormik } from "formik";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import styled from "@emotion/styled";
-import { Delete, Edit } from "@mui/icons-material";
+import { Delete, Edit, Email } from "@mui/icons-material";
 import {
   CREATE_NEW,
   GET_ALL_Teachers,
@@ -25,6 +25,7 @@ import {
   Typography,
   IconButton,
 } from "@mui/material";
+import Auth from "../../../services/auth-service";
 
 const StyledTextField = styled(TextField)(() => ({}));
 
@@ -45,7 +46,11 @@ const validationSchema = yup.object().shape({
     .max(30, "Enter an alternate email address")
     .required("Please provide a email address")
     .matches(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i, "Invalid format"),
-  phone: yup.string().required("Contact info is required"),
+  phone: yup
+    .string()
+    .min(11, "Phone length should  11")
+    .max(11, "Phone length should  11")
+    .required("Contact info is required"),
 });
 
 export const AddStaff = ({ teacherUpdatedData }) => {
@@ -138,8 +143,10 @@ export const AddStaff = ({ teacherUpdatedData }) => {
   };
   const formik = useFormik({
     initialValues: {
-      code: teacherUpdatedData ? teacherUpdatedData?.code : "",
       name: teacherUpdatedData ? teacherUpdatedData?.name : "",
+      email: teacherUpdatedData ? teacherUpdatedData?.email : "",
+      phone: teacherUpdatedData ? teacherUpdatedData?.phone : "",
+      connectCubeId: "",
     },
     validationSchema,
     onSubmit: (values) => {
@@ -151,9 +158,32 @@ export const AddStaff = ({ teacherUpdatedData }) => {
         toast.error("Select a Subject first");
         return;
       }
-      teacherUpdatedData ? updateClassSubject(values) : addNewTeacher(values);
+
+      if (teacherUpdatedData) {
+        updateClassSubject(values);
+      } else {
+        // Auth.signup(values.name, values.email, "txend1122")
+        //   .then((user) => {
+        //     values.connectCubeId = user?.user?.id;
+        //     addNewTeacher(values);
+        //   })
+        //   .catch((er) => {
+        //     console.log("chaterror", er);
+        //   });
+        addNewTeacher(values);
+      }
     },
   });
+
+  React.useEffect(() => {
+    if (formik.values.phone) {
+      const formattedValue = formik.values.phone
+        .replace(/[^0-9]/g, "")
+        .slice(0, 11); // Remove non-numeric characters and limit to 13 characters
+
+      formik.setFieldValue("phone", formattedValue);
+    }
+  }, [formik.values.phone]);
 
   return (
     <CardWrapper

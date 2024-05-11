@@ -39,6 +39,11 @@
             "title": "Profile",
             "icon": "HowToRegOutlined",
             "to": "teacher/profile"
+          },
+          {
+            "title": "Messages",
+            "icon": "HowToRegOutlined",
+            "to": "teacher/chat"
           }
         ]
       }
@@ -79,6 +84,11 @@
             "title": "Profile",
             "icon": "HowToRegOutlined",
             "to": "parent/profile"
+          },
+          {
+            "title": "Messages",
+            "icon": "HowToRegOutlined",
+            "to": "parent/chat"
           }
         ]
       }
@@ -142,6 +152,11 @@
             "title": "Profile",
             "icon": "HowToRegOutlined",
             "to": "admin/profile"
+          },
+          {
+            "title": "Messages",
+            "icon": "HowToRegOutlined",
+            "to": "admin/chat"
           }
         ]
       }

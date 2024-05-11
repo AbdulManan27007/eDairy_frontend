@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import dayjs from "dayjs";
 import { useNavigate } from "react-router-dom";
+import Auth from "../../services/auth-service";
 
 export const UserProfile = ({ user }) => {
   const theme = useTheme();
@@ -24,10 +25,14 @@ export const UserProfile = ({ user }) => {
   }, []);
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
+    localStorage.removeItem("access_token");
     localStorage.removeItem("id");
-
     navigate("/");
+    Auth.logout()
+      .then(() => {
+        navigate("/");
+      })
+      .catch((er) => {});
   };
 
   return (
@@ -52,7 +57,7 @@ export const UserProfile = ({ user }) => {
         <Grid item xs={6}>
           <Box textAlign="right">
             <Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>
-              {user.username}
+              {user.name}
             </Typography>
           </Box>
           <Box textAlign="right">

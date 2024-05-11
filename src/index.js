@@ -6,6 +6,8 @@ import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import { store } from "./App/store";
+import Auth from "./services/auth-service";
+
 import EDairyStateContext from "./context/EDairyStateContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
