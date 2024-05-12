@@ -1,5 +1,5 @@
-import dayjs from 'dayjs';
-import React from 'react';
+import dayjs from "dayjs";
+import React from "react";
 import {
   Box,
   Table,
@@ -8,16 +8,16 @@ import {
   TableHead,
   TableRow,
   Typography,
-} from '@mui/material';
+} from "@mui/material";
 
 export const AbsentList = ({ data }) => {
   // Getting Today's Date
-  const currentDate = dayjs(new Date().toString()).format('DD/MMM/YYYY');
+  const currentDate = dayjs(new Date().toString()).format("DD/MMM/YYYY");
   // Getting the absentee day of today
   let currentAbsenteeData = data?.find((arr) => arr.date === currentDate);
 
   return (
-    <Box sx={{ height: '320px', overflow: 'auto' }}>
+    <Box sx={{ height: "320px", overflow: "auto" }}>
       {currentAbsenteeData ? (
         <Table>
           <TableHead>
@@ -30,12 +30,12 @@ export const AbsentList = ({ data }) => {
             {currentAbsenteeData?.absentees.map((absentee, index) => (
               <TableRow key={index}>
                 <TableCell>
-                  <Typography variant='body1' component='span'>
-                    {absentee?.rollno}
+                  <Typography variant="body1" component="span">
+                    {absentee?.id}
                   </Typography>
                 </TableCell>
                 <TableCell>
-                  <Typography variant='body1' component='span'>
+                  <Typography variant="body1" component="span">
                     {absentee?.name}
                   </Typography>
                 </TableCell>

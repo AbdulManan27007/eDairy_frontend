@@ -17,8 +17,6 @@ import { AttendanceListStodent } from "../Features/Teachers/Attendance/Attendanc
 import { TeacherAssignmentContainer } from "../Features/Teachers/Assignment/TeacherAssignmentContainer";
 import StudentDashboard from "../Features/Student/StudentDashboard";
 import { ParentsCardWrapper } from "../Features/Admin/parents/ParentsCardWrapper";
-// import ChatScreen from "../Pages/Chat/ChatScreen";
-import Home from "../Pages/Home/Home";
 import ChatScreen from "../Pages/Chat/ChatScreen";
 
 const DashboardRoutes = ({ user }) => {
@@ -35,7 +33,6 @@ const DashboardRoutes = ({ user }) => {
         <Route path="admin/teachers" element={<TeacherCardWrapper />} />
 
         <Route path="admin/timetable" element={<AdminTimeTable />} />
-
         <Route path="admin/students" element={<StudentsCardWrapper />} />
         <Route path="admin/parents" element={<ParentsCardWrapper />} />
 
@@ -43,6 +40,7 @@ const DashboardRoutes = ({ user }) => {
         <Route path="admin/chat" element={<ChatScreen />} />
 
         <Route path="admin/e_dairy" element={<TeacherAssignmentContainer />} />
+        <Route path="admin/attendance" element={<Attendance />} />
       </Route>
 
       {/* --------- Teacher Routes ------- */}

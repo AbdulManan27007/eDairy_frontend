@@ -127,6 +127,13 @@
             "icon": "TableChartOutlined",
             "to": "admin/timetable"
           },
+
+          {
+            "title": "Attendance",
+            "icon": "GroupsOutlined",
+            "to": "admin/attendance"
+          },
+
           {
             "title": "Teachers",
             "icon": "CalendarMonthOutlined",
