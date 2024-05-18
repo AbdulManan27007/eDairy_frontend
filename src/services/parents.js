@@ -57,3 +57,15 @@ export const LoginParent = async (dataObj) => {
     throw error;
   }
 };
+
+export const tutionTeacher = async (dataObj) => {
+  try {
+    const response = await axios.post(
+      `${BASE_API_URL}/parent/tutionTeacher/login`,
+      dataObj
+    );
+    return response.data; // You may return a success message or relevant data.
+  } catch (error) {
+    throw error;
+  }
+};

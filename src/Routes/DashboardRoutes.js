@@ -18,6 +18,7 @@ import { TeacherAssignmentContainer } from "../Features/Teachers/Assignment/Teac
 import StudentDashboard from "../Features/Student/StudentDashboard";
 import { ParentsCardWrapper } from "../Features/Admin/parents/ParentsCardWrapper";
 import ChatScreen from "../Pages/Chat/ChatScreen";
+import { TutionTeacherCardWrapper } from "../Features/Admin/tutionTeacher/TutionTeacherCardWrapper";
 
 const DashboardRoutes = ({ user }) => {
   return (
@@ -70,9 +71,29 @@ const DashboardRoutes = ({ user }) => {
         <Route path="parent/e_dairy" element={<TeacherAssignmentContainer />} />
 
         <Route path="parent/profile" element={<AccountWrapper />} />
+        <Route
+          path="parent/tutionTeacher"
+          element={<TutionTeacherCardWrapper />}
+        />
 
         <Route path="parent/attendance" element={<AttendanceListStodent />} />
         <Route path="parent/chat" element={<ChatScreen />} />
+      </Route>
+
+      <Route
+        element={
+          <RequireAuth allowedRoles={ROLES_LIST.tutionTeacher} user={user} />
+        }
+      >
+        <Route path="tutionTeacher/home" element={<StudentDashboard />} />
+        <Route
+          path="tutionTeacher/e_dairy"
+          element={<TeacherAssignmentContainer />}
+        />
+        <Route
+          path="tutionTeacher/attendance"
+          element={<AttendanceListStodent />}
+        />
       </Route>
     </Routes>
   );

@@ -94,7 +94,8 @@ export const NavBar = () => {
   const navigate = useNavigate();
 
   const context = useContext(eDairyContext);
-  const { user, setUser, dialogs, chosenDialog } = context;
+  const { user, setUser, dialogs, chosenDialog, firstRender, setFirstRender } =
+    context;
 
   const [unreadCount, setUnreadCount] = useState(null);
 
@@ -150,10 +151,10 @@ export const NavBar = () => {
           )}
         </IconButton>
 
-        {/* <PopoverContainer
+        <PopoverContainer
           buttonIcon={<NotificationsOutlined />}
           popoverContent={<Notifications />}
-        /> */}
+        />
 
         <Divider orientation="vertical" variant="middle" flexItem />
 

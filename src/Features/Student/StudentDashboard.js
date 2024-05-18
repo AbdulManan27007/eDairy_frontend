@@ -13,7 +13,7 @@ const StudentDashboard = () => {
   const { user, selectedChilren, setChildrens } = context;
 
   useEffect(() => {
-    user?.id && getChildrens();
+    user?.role == "parent" && user?.id && getChildrens();
   }, []);
 
   const getChildrens = () => {

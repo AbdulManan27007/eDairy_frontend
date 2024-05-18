@@ -39,7 +39,7 @@ export const Searchbar = () => {
 
   return (
     <div class="w-1/3 mx-auto">
-      {user.role == "parent" ? (
+      {user.role == "parent" || user.role == "tutionTeacher" ? (
         <select
           onChange={handleChangeChildren}
           id="countries"

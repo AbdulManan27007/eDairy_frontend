@@ -80,6 +80,8 @@ export const AttendanceListClass = ({ setNewAttendance }) => {
 
   const [isLoading, setisLoading] = useState(false);
 
+  console.log("attendanceObject", attendanceObject);
+
   // Getting Today's Date
   const handleRadioChange = (index, value) => {};
 
@@ -179,9 +181,13 @@ export const AttendanceListClass = ({ setNewAttendance }) => {
                         <RadioGroup
                           value={
                             attendanceObject?.absentees?.some(
-                              (absentee) => absentee?.rollno == item.id
+                              (absentee) => absentee?.rollno === item.id
                             )
                               ? "Absent"
+                              : attendanceObject?.onleave?.some(
+                                  (leave) => leave?.rollno === item.id
+                                )
+                              ? "Leave"
                               : "Present"
                           }
                           onChange={() => {}}
@@ -196,6 +202,12 @@ export const AttendanceListClass = ({ setNewAttendance }) => {
                             value="Absent"
                             control={<Radio color="error" disabled />}
                             label="Absent"
+                          />
+
+                          <FormControlLabel
+                            value="Leave"
+                            control={<Radio color="error" disabled />}
+                            label="Leave"
                           />
                         </RadioGroup>
                       ) : (

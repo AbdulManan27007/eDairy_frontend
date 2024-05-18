@@ -74,7 +74,7 @@ export const Attendance = () => {
     const status = attendance[index];
 
     if (status) {
-      return status == "Present" ? "#4e73df" : "red";
+      return status == "Present" || status == "Leave" ? "#4e73df" : "red";
     } else {
       return "#4e73df";
     }
@@ -104,8 +104,18 @@ export const Attendance = () => {
 
     // Filter and output only the absentees
     const absentArray = students?.filter(
-      (student, index) => attendance[index] !== "Present"
+      (student, index) => attendance[index] == "Absent"
     );
+
+    const leaveArray = students?.filter(
+      (student, index) => attendance[index] == "Leave"
+    );
+
+    let onleave = leaveArray.map((student) => ({
+      name: student.name,
+      rollno: student.id,
+      id: student.rollNumber,
+    }));
 
     let absentees = absentArray.map((student) => ({
       name: student.name,
@@ -113,7 +123,7 @@ export const Attendance = () => {
       id: student.rollNumber,
     }));
 
-    if (absentees?.length === 0) {
+    if (absentees?.length === 0 || onleave?.length === 0) {
       absentees = ["All Present"];
     }
 
@@ -121,11 +131,9 @@ export const Attendance = () => {
     const attendanceObject = {
       date: currentDate,
       absentees: absentees,
+      onleave: onleave,
       attendancePercentage: attendancePercentage,
     };
-
-    console.log("attendanceObject", attendanceObject);
-
     Attndnce(attendanceObject);
   };
 
@@ -154,6 +162,7 @@ export const Attendance = () => {
       .then((response) => {
         response.data && setSelectedClass(response.data);
         toast.success("submitted todays Attendance");
+        setNewAttendance(false);
       })
       .catch((error) => toast.error(error.error || error.data.error.message));
   };
@@ -274,6 +283,12 @@ export const Attendance = () => {
                                 value="Absent"
                                 control={<Radio color="error" />}
                                 label="Absent"
+                              />
+
+                              <FormControlLabel
+                                value="Leave"
+                                control={<Radio color="info" />}
+                                label="Leave"
                               />
                             </RadioGroup>
                           </TableCell>

@@ -43,6 +43,13 @@ const App = () => {
         });
       }
 
+      // if (decodeToken.role == "tutionTeacher") {
+      //   localStorage.removeItem("access_token");
+      //   localStorage.removeItem("id");
+      //   navigate("/");
+
+      // }
+
       setUser({ ...decodeToken, accessToken: accessToken });
       navigate(`/dashboard/${decodeToken.role}/home`);
     }

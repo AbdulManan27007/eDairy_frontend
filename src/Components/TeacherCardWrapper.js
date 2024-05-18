@@ -55,6 +55,7 @@ export const TeacherCardWrapper = ({ title, children, dialogChildren }) => {
 
           {(user.role == "admin" || title == "E_Dairy") &&
             user.role !== "parent" &&
+            user.role !== "tutionTeacher" &&
             user.role !== "admin" && (
               <Button
                 sx={{

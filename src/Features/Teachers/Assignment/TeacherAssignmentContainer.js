@@ -18,7 +18,7 @@ export const TeacherAssignmentContainer = () => {
       getalldaireis({ class: selectedClass?.id, subject: selectedSubject });
     } else if (selectedClass?.id) {
       getalldaireis({ class: selectedClass?.id });
-    } else if (user.role !== "parent") {
+    } else if (user.role !== "parent" || user.role !== "tutionTeacher") {
       getalldaireis({});
     }
   }, [selectedClass, selectedSubject]);

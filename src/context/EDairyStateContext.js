@@ -14,7 +14,7 @@ const EDairyStateContext = (props) => {
   const chosenDialogRef = useRef();
   const [chosenDialog, setChosenDialog] = useState();
   const [dialogs, setDialogs] = useState();
-  const [gettingUsers, setGettingUsers] = useState(false);
+  const [firstRender, setFirstRender] = useState(true);
   const [connectStatus, setConnectStatus] = useState(false);
   const messagesRef = useRef({});
   const lastActivityRef = useRef({});
@@ -1062,6 +1062,8 @@ const EDairyStateContext = (props) => {
         addUsersToGroup,
         leaveGroupChat,
         readMessage,
+        firstRender,
+        setFirstRender,
       }}
     >
       {props.children}

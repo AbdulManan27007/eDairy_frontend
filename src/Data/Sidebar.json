@@ -71,6 +71,11 @@
             "to": "parent/e_dairy"
           },
           {
+            "title": "Tution Teacher",
+            "icon": "TableChartOutlined",
+            "to": "parent/tutionTeacher"
+          },
+          {
             "title": "Attendance",
             "icon": "TableChartOutlined",
             "to": "parent/attendance"
@@ -94,6 +99,39 @@
       }
     ]
   },
+
+  {
+    "type": "tutionTeacher",
+    "content": [
+      {
+        "division": "Dashboard",
+        "section": [
+          {
+            "title": "Dashboard",
+            "icon": "DashboardOutlined",
+            "to": "tutionTeacher/home"
+          }
+        ]
+      },
+      {
+        "division": "Addons",
+        "section": [
+          {
+            "title": "Edairy",
+            "icon": "AssignmentOutlined",
+            "to": "tutionTeacher/e_dairy"
+          },
+
+          {
+            "title": "Attendance",
+            "icon": "TableChartOutlined",
+            "to": "tutionTeacher/attendance"
+          }
+        ]
+      }
+    ]
+  },
+
   {
     "type": "admin",
     "content": [

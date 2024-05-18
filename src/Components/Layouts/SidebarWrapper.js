@@ -11,7 +11,7 @@ import {
   toggleLgView,
   toggleMobView,
 } from "../../Features/ToggleSideBar/ToggleSidebarSlice";
-import Logo from "../../Assets/Images/logo.png";
+import Logo from "../../Assets/Images/logo-removebg-preview.png";
 import { SideNavLinks } from "./SideNavLinks";
 import { drawerWidth, fullDrawerWidth } from "./DrawerWidth";
 

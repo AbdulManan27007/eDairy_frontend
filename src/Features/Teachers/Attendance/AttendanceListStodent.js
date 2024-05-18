@@ -104,8 +104,14 @@ export const AttendanceListStodent = () => {
                     <TableCell>
                       <RadioGroup
                         value={
-                          item?.absentees?.rollno == selectedChilren.id
+                          item?.absentees?.some(
+                            (absentee) => absentee?.rollno === item.id
+                          )
                             ? "Absent"
+                            : item?.onleave?.some(
+                                (leave) => leave?.rollno === item.id
+                              )
+                            ? "Leave"
                             : "Present"
                         }
                         onChange={(event) =>
@@ -122,6 +128,11 @@ export const AttendanceListStodent = () => {
                           value="Absent"
                           control={<Radio color="error" disabled />}
                           label="Absent"
+                        />
+                        <FormControlLabel
+                          value="Leave"
+                          control={<Radio color="error" disabled />}
+                          label="Leave"
                         />
                       </RadioGroup>
                     </TableCell>

@@ -30,7 +30,7 @@ import Banner from "../../Assets/login-banner.png";
 
 import { LoginAdmin } from "../../services/Admin";
 import eDairyContext from "../../context/eDairyContext";
-import { LoginParent } from "../../services/parents";
+import { LoginParent, tutionTeacher } from "../../services/parents";
 import { LoginTeacher } from "../../services/Teachers";
 import Auth from "../../services/auth-service";
 
@@ -61,7 +61,7 @@ const LoginValidationSchema = yup.object({
 const Login = () => {
   const navigate = useNavigate();
   const context = useContext(eDairyContext);
-  const { user, setUser } = context;
+  const { user, setUser, setChildrens } = context;
 
   // Formik configuration
   const formik = useFormik({
@@ -84,6 +84,8 @@ const Login = () => {
       ParentLogin(credentials);
     } else if (selectedRole == "teacher") {
       teacherLogin(credentials);
+    } else if (selectedRole == "tutionTeacher") {
+      tutionTeacherLogin(credentials);
     } else {
       toast.error("select role first");
     }
@@ -192,9 +194,36 @@ const Login = () => {
         toast.error(errorMessage); // Show error message using toast
       });
   };
+
+  const tutionTeacherLogin = async (credentials) => {
+    tutionTeacher(credentials)
+      .then((data) => {
+        return data?.data;
+      })
+      .then((resp) => {
+        localStorage.setItem("access_token", resp?.user?.accessToken);
+        localStorage.setItem("id", resp?.user?.id);
+        setUser(resp?.user);
+        setChildrens(resp.childrens);
+        navigate(`/dashboard/${resp.user.role}/home`);
+      })
+      .catch((error) => {
+        console.log("error", error);
+        const errorMessage =
+          error?.error?.message ||
+          error?.data?.error?.message ||
+          "An error occurred.";
+        toast.error(errorMessage); // Show error message using toast
+      });
+  };
   // For viewing or hiding password input field
   const [showPassword, setShowPassword] = useState(false);
-  const [roles, setRoles] = useState(["parent", "admin", "teacher"]);
+  const [roles, setRoles] = useState([
+    "parent",
+    "admin",
+    "teacher",
+    "tutionTeacher",
+  ]);
   const [selectedRole, setselectedRole] = useState("admin");
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);

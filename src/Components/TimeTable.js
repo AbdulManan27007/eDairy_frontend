@@ -16,7 +16,6 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
     fontWeight: "bold",
   },
 }));
-
 export const TimeTable = ({ data }) => {
   console.log("data", data);
 
@@ -33,25 +32,166 @@ export const TimeTable = ({ data }) => {
             <TableRow>
               <StyledTableCell>Day</StyledTableCell>
               <StyledTableCell align="center">
-                Period 1 <br /> 9am - 10am
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                  }}
+                >
+                  <span
+                    style={{
+                      fontSize: "12px",
+                      fontWeight: "bold",
+                      minWidth: "45px",
+                    }}
+                  >
+                    Period 1
+                  </span>
+                  <span
+                    style={{
+                      fontSize: "10px",
+                      minWidth: "60px",
+                    }}
+                  >
+                    8am - 9am
+                  </span>
+                </div>
               </StyledTableCell>
               <StyledTableCell align="center">
-                Period 2 <br /> 10am - 11am
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                  }}
+                >
+                  <span
+                    style={{
+                      fontSize: "12px",
+                      fontWeight: "bold",
+                      minWidth: "45px",
+                    }}
+                  >
+                    Period 2
+                  </span>
+                  <span
+                    style={{
+                      fontSize: "10px",
+                      minWidth: "60px",
+                    }}
+                  >
+                    9am - 10am
+                  </span>
+                </div>
               </StyledTableCell>
               <StyledTableCell align="center">
-                Period 3 <br /> 11am - 12pm
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                  }}
+                >
+                  <span
+                    style={{
+                      fontSize: "12px",
+                      fontWeight: "bold",
+                      minWidth: "45px",
+                    }}
+                  >
+                    Period 3
+                  </span>
+                  <span
+                    style={{
+                      fontSize: "10px",
+                      minWidth: "60px",
+                    }}
+                  >
+                    10am - 11pm
+                  </span>
+                </div>
               </StyledTableCell>
               <StyledTableCell align="center">
-                Period 4 <br /> 12pm - 1pm
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                  }}
+                >
+                  <span
+                    style={{
+                      fontSize: "12px",
+                      fontWeight: "bold",
+                      minWidth: "45px",
+                    }}
+                  >
+                    Period 4
+                  </span>
+                  <span
+                    style={{
+                      fontSize: "10px",
+                      minWidth: "60px",
+                    }}
+                  >
+                    11pm - 12pm
+                  </span>
+                </div>
               </StyledTableCell>
               <StyledTableCell align="center">
-                Period 5 <br /> 1pm - 2pm
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                  }}
+                >
+                  <span
+                    style={{
+                      fontSize: "12px",
+                      fontWeight: "bold",
+                      minWidth: "45px",
+                    }}
+                  >
+                    Period 5
+                  </span>
+                  <span
+                    style={{
+                      fontSize: "10px",
+                      minWidth: "60px",
+                    }}
+                  >
+                    12pm - 1pm
+                  </span>
+                </div>
               </StyledTableCell>
               <StyledTableCell align="center">
-                Period 6 <br /> 2pm - 3pm
-              </StyledTableCell>
-              <StyledTableCell align="center">
-                Period 7 <br /> 3pm - 4pm
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                  }}
+                >
+                  <span
+                    style={{
+                      fontSize: "12px",
+                      fontWeight: "bold",
+                      minWidth: "45px",
+                    }}
+                  >
+                    Period 6
+                  </span>
+                  <span
+                    style={{
+                      fontSize: "10px",
+                      minWidth: "60px",
+                    }}
+                  >
+                    1pm - 2pm
+                  </span>
+                </div>
               </StyledTableCell>
             </TableRow>
           </TableHead>
@@ -71,7 +211,7 @@ export const TimeTable = ({ data }) => {
                 >
                   {row?.day}
                 </TableCell>
-                {row?.periods?.map((period, index) => (
+                {row?.periods?.slice(0, 6).map((period, index) => (
                   <TableCell align="center" key={index}>
                     {period}
                   </TableCell>
