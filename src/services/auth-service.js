@@ -21,9 +21,9 @@ class AuthService {
     };
     const defLogin = () => {
       const credentials = {
-        appId: "7679",
-        authKey: "ZNVEHaBPpdzYRK9",
-        authSecret: "U2VPwkDWOAmcs2G",
+        appId: "7757",
+        authKey: "qGPwb3AELNkdrYs",
+        authSecret: "7v7cryjzFuwqYPV",
         chat: {
           streamManagement: {
             enable: true,
@@ -35,7 +35,7 @@ class AuthService {
     };
     const tokenLogin = (token) => {
       const CREDENTIALS = {
-        appId: "7679",
+        appId: "7757",
         token: token.token,
       };
       ConnectyCube.init(CREDENTIALS, appConfig);

@@ -8,23 +8,28 @@ import Divider from "@mui/material/Divider";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import eDairyContext from "../../context/eDairyContext";
-
-const getBase64 = (img, callback) => {
-  const reader = new FileReader();
-  reader.addEventListener("load", () => callback(reader.result));
-  reader.readAsDataURL(img);
-};
+import { UploadImage } from "../../services/Admin";
+import { toast } from "react-toastify";
+import stables from "../../constants/stables";
 
 export const AccountInfo = ({ imageSrc, setImageSrc }) => {
   const context = React.useContext(eDairyContext);
   const { user, setUser } = context;
 
   const handleImageUpload = (event) => {
-    const file = event.target.files[0];
-    getBase64(file, (url) => {
-      console.log("uri", url);
-      setImageSrc(url);
-    });
+    const Image = event.target.files[0];
+    const formData = new FormData();
+    formData.append("image", Image);
+
+    UploadImage(formData)
+      .then((resp) => {
+        if (resp.status == "success") {
+          setImageSrc(resp.data);
+        }
+      })
+      .catch((err) => {
+        toast.error("error while image upload");
+      });
   };
 
   // const handleImageChange = (info) => {
@@ -53,7 +58,14 @@ export const AccountInfo = ({ imageSrc, setImageSrc }) => {
         <CardContent>
           <Stack spacing={2} sx={{ alignItems: "center" }}>
             <div>
-              <Avatar src={imageSrc} sx={{ height: "80px", width: "80px" }} />
+              <Avatar
+                src={
+                  imageSrc
+                    ? stables.UPLOAD_FOLDER_BASE_URL + imageSrc
+                    : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTJTN02kiBd6bxj8_oo2Wn5V0nRgm_kSdBSVw&s"
+                }
+                sx={{ height: "80px", width: "80px" }}
+              />
             </div>
             <Stack spacing={1} sx={{ textAlign: "center" }}>
               <Typography variant="h5">{user?.name}</Typography>

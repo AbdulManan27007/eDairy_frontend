@@ -1,4 +1,6 @@
 export const getTime = (messageTime) => {
+  console.log("messageTime", messageTime);
+
   if (Number.isInteger(messageTime)) {
     const now = new Date(messageTime * 1000);
     let d = new Date(

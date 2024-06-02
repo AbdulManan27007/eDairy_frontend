@@ -24,6 +24,24 @@ export const Searchbar = () => {
     }
   };
 
+  const handleInputChangeTeacher = (event) => {
+    if (event.target.value && event.target.value !== "Choose a Class") {
+      const selectedItem = classes?.find(
+        (item) => item?.name === event.target.value
+      );
+      setSelectedClass(selectedItem || {});
+
+      const selectedObject = user?.assigned?.find(
+        (item) => item?.class?.name === event.target.value
+      );
+
+      setSubjects(selectedObject?.subject || []);
+    } else {
+      setSelectedClass({});
+      setSubjects([]);
+    }
+  };
+
   const handleChangeChildren = (event) => {
     if (event.target.value) {
       const selectedItem = childrens?.find(
@@ -54,7 +72,13 @@ export const Searchbar = () => {
         </select>
       ) : (
         <select
-          onChange={handleInputChange}
+          onChange={
+            user
+              ? user.role == "teacher"
+                ? handleInputChangeTeacher
+                : handleInputChange
+              : () => {}
+          }
           id="countries"
           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
         >

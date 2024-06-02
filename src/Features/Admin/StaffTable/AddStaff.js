@@ -58,13 +58,26 @@ export const AddStaff = ({ teacherUpdatedData }) => {
 
   const context = useContext(eDairyContext);
   const { subjects, classes, teachers, setTeachers } = context;
-  const [selectedClass, setSelectedClass] = useState(
-    teacherUpdatedData ? teacherUpdatedData?.assigned[0]?.class : {}
-  );
 
-  const [selectedSubject, setSelectedSubject] = useState(
-    teacherUpdatedData ? teacherUpdatedData?.assigned[0]?.subject : []
-  );
+  const [assignedArray, setAssignedArray] = useState([]);
+
+  const [selectedClass, setSelectedClass] = useState({});
+
+  const [selectedSubject, setSelectedSubject] = useState([]);
+
+  const addIntoAssignedArray = () => {
+    if (!selectedSubject?.length) {
+      toast.error("select atleast one subject first");
+      return;
+    }
+    const newObj = {
+      class: selectedClass.id,
+      subject: selectedSubject,
+    };
+    setAssignedArray((prev) => [...prev, newObj]);
+    setSelectedClass({});
+    setSelectedSubject([]);
+  };
 
   const handleChangeClass = (event) => {
     if (event.target.value) {
@@ -87,16 +100,12 @@ export const AddStaff = ({ teacherUpdatedData }) => {
     values.password = values.email;
     const body = {
       ...values,
-      assigned: [
-        {
-          class: selectedClass.id,
-          subject: selectedSubject,
-        },
-      ],
+      assigned: assignedArray,
     };
 
     CREATE_NEW(body)
       .then(async (response) => {
+        setAssignedArray([]);
         const data = await GET_ALL_Teachers();
         data.data && setTeachers(data.data);
         toast.success(response.message);
@@ -114,15 +123,18 @@ export const AddStaff = ({ teacherUpdatedData }) => {
   const updateClassSubject = (values) => {
     setisLoading(true);
 
+    const prevarray = teacherUpdatedData?.assigned?.length
+      ? teacherUpdatedData?.assigned?.map((item) => {
+          return { class: item?.class.id, subject: item.subject };
+        })
+      : [];
+
+    const newArray = [...prevarray, ...assignedArray];
+
     const body = {
       ...values,
       id: teacherUpdatedData.id,
-      assigned: [
-        {
-          class: selectedClass.id,
-          subject: selectedSubject,
-        },
-      ],
+      assigned: newArray,
     };
 
     UPDATE_BY_ID(body)
@@ -150,18 +162,13 @@ export const AddStaff = ({ teacherUpdatedData }) => {
     },
     validationSchema,
     onSubmit: (values) => {
-      if (!selectedClass?.name) {
-        toast.error("Select a class first");
-        return;
-      }
-      if (!selectedSubject?.length) {
-        toast.error("Select a Subject first");
-        return;
-      }
-
       if (teacherUpdatedData) {
         updateClassSubject(values);
       } else {
+        if (!assignedArray?.length) {
+          toast.error("atleast one class required");
+          return;
+        }
         // Auth.signup(values.name, values.email, "txend1122")
         //   .then((user) => {
         //     values.connectCubeId = user?.user?.id;
@@ -253,6 +260,13 @@ export const AddStaff = ({ teacherUpdatedData }) => {
           </Grid>
 
           <Grid item xs={12}>
+            <span style={{ height: "15px", marginTop: "10px", color: "blue" }}>
+              {" "}
+              {assignedArray.length} classes Assigned{" "}
+            </span>
+          </Grid>
+
+          <Grid item xs={12}>
             <InputLabel sx={{ width: "100%" }} id="demo-simple-select-label">
               Assign Class
             </InputLabel>
@@ -304,6 +318,23 @@ export const AddStaff = ({ teacherUpdatedData }) => {
                 })}
             </Select>
           </Grid>
+
+          {selectedSubject?.length ? (
+            <Grid item xs={12}>
+              <div style={{ display: "flex", justifyContent: "center" }}>
+                <Button
+                  variant="contained"
+                  color="success"
+                  sx={{ width: "80%%", height: "20px" }}
+                  onClick={addIntoAssignedArray}
+                >
+                  Assigned selected class and subjects
+                </Button>
+              </div>
+            </Grid>
+          ) : (
+            <></>
+          )}
 
           {/* ----------- Contact Info -------------- */}
 

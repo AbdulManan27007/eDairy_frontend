@@ -20,14 +20,19 @@ const TeacherDashboard = () => {
     setSelectedClass,
   } = context;
 
+  const [totalSubjectsLength, settotalSubjectsLength] = useState(0);
+
   useEffect(() => {
     if (user) {
       const allcls = user?.assigned?.map((item) => item?.class);
       setClasses(allcls);
       allcls?.length && setSelectedClass(allcls[0]);
-
-      const allsubjects = user?.assigned?.map((item) => item?.subject);
-      allsubjects?.length && setSubjects(allsubjects[0]);
+      const allsubjects = user?.assigned?.map((item) => item?.subject) || [];
+      const totalSubjectsLength = allsubjects.reduce(
+        (acc, subject) => acc + (subject?.length || 0),
+        0
+      );
+      settotalSubjectsLength(totalSubjectsLength);
     }
   }, [user]);
 
@@ -44,7 +49,7 @@ const TeacherDashboard = () => {
         <Grid container rowSpacing={3} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
           <Grid item xs={12} sm={6} lg={6}>
             <SummaryCardTeacher
-              title={"Total Classes"}
+              title={"Total Assigned Classes"}
               icon={"Assignment"}
               color={"#44336f"}
               count={classes?.length}
@@ -53,10 +58,10 @@ const TeacherDashboard = () => {
 
           <Grid item xs={12} sm={6} lg={6}>
             <SummaryCardTeacher
-              title={"All Subjects"}
+              title={"Total Assigned Subjects"}
               icon={"TaskAlt"}
               color={"#4caf50"}
-              count={subjects?.length}
+              count={totalSubjectsLength}
             />
           </Grid>
         </Grid>

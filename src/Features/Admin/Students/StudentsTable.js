@@ -1,7 +1,14 @@
 import React, { useContext, useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { IconButton, Box, Dialog, DialogContent, Button } from "@mui/material";
+import {
+  IconButton,
+  Box,
+  Dialog,
+  DialogContent,
+  Button,
+  Avatar,
+} from "@mui/material";
 import { Delete, Edit } from "@mui/icons-material";
 import { DataGrid } from "@mui/x-data-grid";
 
@@ -10,6 +17,7 @@ import eDairyContext from "../../../context/eDairyContext";
 import { CustomNoRowsOverlay } from "../../../Components/NoRowsOverlay";
 import Loading from "../../../Components/Loading";
 import { AddStudent } from "./AddStudent";
+import stables from "../../../constants/stables";
 
 // Users Data Component
 //  Renders the users registered in the app
@@ -73,6 +81,24 @@ export const StudentsTable = () => {
       field: "name",
       headerName: "Name",
       width: 200,
+      renderCell: (params) => (
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: "5px",
+          }}
+        >
+          <Avatar
+            src={stables.UPLOAD_FOLDER_BASE_URL + params?.row?.profilePic}
+            sx={{ width: 24, height: 24 }}
+          >
+            {params?.row?.name?.slice(0, 1)}
+          </Avatar>
+
+          <span>{params?.row?.name}</span>
+        </div>
+      ),
     },
     {
       field: "rollNumber",

@@ -10,6 +10,7 @@ import {
   Toolbar,
   Typography,
   Badge,
+  Avatar,
 } from "@mui/material";
 import {
   AccountCircleOutlined,
@@ -34,6 +35,7 @@ import { Notifications } from "./Notifications";
 import { Messages } from "./Messages";
 import eDairyContext from "../../context/eDairyContext";
 import { useNavigate } from "react-router-dom";
+import stables from "../../constants/stables";
 
 const MenuIcon = ({ onClick }) => (
   <Hidden smUp>
@@ -168,14 +170,21 @@ export const NavBar = () => {
 
         <PopoverContainer
           buttonIcon={
-            <AccountCircleOutlined
-              sx={{
-                width: 32,
-                height: 32,
-                color: "inherit",
-                backgroundColor: "inherit",
-              }}
-            />
+            user.profilePic ? (
+              <Avatar
+                src={stables.UPLOAD_FOLDER_BASE_URL + user.profilePic}
+                sx={{ width: 32, height: 32 }}
+              />
+            ) : (
+              <AccountCircleOutlined
+                sx={{
+                  width: 32,
+                  height: 32,
+                  color: "inherit",
+                  backgroundColor: "inherit",
+                }}
+              />
+            )
           }
           popoverContent={<UserProfile user={user} />}
         />

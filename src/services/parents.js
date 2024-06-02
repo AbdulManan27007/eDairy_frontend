@@ -49,6 +49,18 @@ export const UPDATE_BY_ID = async (dataObj) => {
   }
 };
 
+export const UPDATE_BY_ID_Parent = async (dataObj) => {
+  try {
+    const { data } = await privateApi.patch(
+      `${BASE_API_URL}/parent/${dataObj.id}`,
+      dataObj
+    );
+    return data;
+  } catch (error) {
+    return error;
+  }
+};
+
 export const LoginParent = async (dataObj) => {
   try {
     const response = await axios.post(`${BASE_API_URL}/parent/login`, dataObj);

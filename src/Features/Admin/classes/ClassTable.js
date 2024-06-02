@@ -138,12 +138,6 @@ export const ClassTable = () => {
           <IconButton color="primary" onClick={() => handleEdit(params?.row)}>
             <Edit />
           </IconButton>
-          <IconButton
-            color="error"
-            onClick={() => handleDelete(params?.row?.id)}
-          >
-            <Delete />
-          </IconButton>
         </div>
       ),
     },

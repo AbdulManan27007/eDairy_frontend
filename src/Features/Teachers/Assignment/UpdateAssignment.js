@@ -37,6 +37,7 @@ import AbcRounded from "@mui/icons-material/AbcRounded";
 
 import { GET_ALL, UPDATE_BY_ID } from "../../../services/E_Dairy";
 import eDairyContext from "../../../context/eDairyContext";
+import stables from "../../../constants/stables";
 
 //Form Validation Schema
 const ValidationSchema = yup.object({
@@ -108,12 +109,11 @@ export const UpdateAssignment = ({ data, id, handleSaveEdit }) => {
 
   const addPoint = () => {
     let comment = {};
-    console.log("user??????", user);
     comment.comment = txt;
     comment.role = user?.role;
     comment.name = user?.name;
     comment.userId = user?.id;
-    // comment.profilePic = user?.profilePic;
+    comment.profilePic = user?.profilePic;
     comment.date = dayjs(new Date().toString()).format("DD/MMM/YYYY");
 
     // comment.reply = {};
@@ -324,7 +324,9 @@ export const UpdateAssignment = ({ data, id, handleSaveEdit }) => {
                       }}
                       id={`comment-${index}`}
                     >
-                      <Avatar src={item?.profilePic}>
+                      <Avatar
+                        src={stables.UPLOAD_FOLDER_BASE_URL + item?.profilePic}
+                      >
                         {item?.name?.slice(0, 1)}
                       </Avatar>
                       <div

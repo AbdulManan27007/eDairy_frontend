@@ -1,7 +1,14 @@
 import React, { useContext, useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { IconButton, Box, Dialog, DialogContent, Button } from "@mui/material";
+import {
+  IconButton,
+  Box,
+  Dialog,
+  DialogContent,
+  Button,
+  Avatar,
+} from "@mui/material";
 import { Delete, Edit } from "@mui/icons-material";
 import { DataGrid } from "@mui/x-data-grid";
 
@@ -10,6 +17,7 @@ import eDairyContext from "../../../context/eDairyContext";
 import { CustomNoRowsOverlay } from "../../../Components/NoRowsOverlay";
 import Loading from "../../../Components/Loading";
 import { AddStaff } from "./AddStaff";
+import stables from "../../../constants/stables";
 
 // Users Data Component
 //  Renders the users registered in the app
@@ -17,9 +25,9 @@ export const TeacherTable = () => {
   const context = useContext(eDairyContext);
   const { teachers, setTeachers, selectedClass } = context;
   const [isLoading, setisLoading] = useState(false);
-  const [editedItem, setEditedItem] = useState("");
+  const [editedItem, setEditedItem] = useState();
   const [editDialogOpen, setEditDialogOpen] = useState(false);
-
+  console.log("editedItem", editedItem);
   const [classTeachers, setClassTeachers] = useState(teachers || []);
   useEffect(() => {
     if (selectedClass?.id) {
@@ -72,6 +80,25 @@ export const TeacherTable = () => {
       field: "name",
       headerName: "Name",
       width: 200,
+
+      renderCell: (params) => (
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: "5px",
+          }}
+        >
+          <Avatar
+            src={stables.UPLOAD_FOLDER_BASE_URL + params?.row?.profilePic}
+            sx={{ width: 24, height: 24 }}
+          >
+            {params?.row?.name?.slice(0, 1)}
+          </Avatar>
+
+          <span>{params?.row?.name}</span>
+        </div>
+      ),
     },
     {
       field: "email",
@@ -156,7 +183,7 @@ export const TeacherTable = () => {
         {/* ----- Dialog for displaying Edit User Form ------ */}
         <Dialog open={editDialogOpen} onClose={handleSaveEdit}>
           <DialogContent>
-            <AddStaff subjectData={editedItem} />
+            <AddStaff teacherUpdatedData={editedItem} />
           </DialogContent>
         </Dialog>
       </Box>
