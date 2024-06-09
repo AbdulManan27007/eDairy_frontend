@@ -34,6 +34,12 @@ const validationSchema = yup.object().shape({
     .string()
     .min(3, "Please enter a valid name")
     .required("Please enter your name"),
+  email: yup
+    .string()
+    .min(5, "Please enter a valid email address")
+    .max(30, "Enter an alternate email address")
+    .required("Please provide a email address")
+    .matches(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i, "Invalid format"),
 
   idCard: yup
     .string()
@@ -107,6 +113,7 @@ export const AddParent = ({ subjectData }) => {
   const formik = useFormik({
     initialValues: {
       name: subjectData ? subjectData?.name : "",
+      email: subjectData ? subjectData?.email : "",
       idCard: subjectData ? subjectData?.idCard : "",
       phone: subjectData ? subjectData?.phone : "",
       address: subjectData ? subjectData?.address : "",
@@ -186,7 +193,24 @@ export const AddParent = ({ subjectData }) => {
                 : ""}
             </StyledTypography>
           </Grid>
-
+          <Grid item xs={12}>
+            <StyledTextField
+              required
+              id="email"
+              label="E-mail"
+              fullWidth
+              name="email"
+              value={formik.values.email}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              error={formik.touched.email && Boolean(formik.errors.email)}
+            />
+            <StyledTypography>
+              {formik.touched.email && formik.errors.email
+                ? formik.errors.email
+                : ""}
+            </StyledTypography>
+          </Grid>
           <Grid item xs={12}>
             <TextField
               fullWidth
