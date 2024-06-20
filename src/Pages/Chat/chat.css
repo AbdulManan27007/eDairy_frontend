@@ -1,0 +1,54 @@
+.test {
+  height: 488px;
+}
+
+.chats {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 28px;
+  line-height: 42px;
+  /* identical to box height */
+
+  letter-spacing: 0.05em;
+
+  color: #555555;
+}
+
+.username {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 15px;
+  line-height: 22px;
+  /* identical to box height */
+
+  color: #222222;
+
+  opacity: 0.84;
+}
+
+.info-user-last-message {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 22px;
+
+  color: rgba(34, 34, 34, 0.84);
+
+  /* Inside auto layout */
+}
+
+.activeUsername {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 15px;
+  line-height: 22px;
+  /* identical to box height */
+
+  color: #222222;
+
+  opacity: 0.84;
+}
